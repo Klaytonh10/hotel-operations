@@ -1,13 +1,16 @@
 package org.example;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 public class Employee {
-    private int employeeId;
+    private String employeeId;
     private String name;
     private String department;
     private double payRate;
     private double hoursWorked;
 
-    public void Employee(int employeeId, String name, String department, double payRate, double hoursWorked) {
+    public Employee(String employeeId, String name, String department, double payRate, double hoursWorked) {
         this.employeeId = employeeId;
         this.name = name;
         this.department = department;
@@ -15,21 +18,41 @@ public class Employee {
         this.hoursWorked = hoursWorked;
     }
 
-    public void getTotalPay() {
+    public double getTotalPay() {
 
+        double normalPay = hoursWorked * payRate;
+        double overtimePay = payRate * 1.5;
+        double overtimeHours = hoursWorked - 40;
+
+        if(overtimeHours > 0) {
+            return normalPay + (overtimePay * overtimeHours);
+        } else {
+            return normalPay;
+        }
     }
 
-    public void getRegularHours() {
-
+    public double getRegularHours() {
+        return hoursWorked;
     }
 
     public void getOvertimeHours() {
-
+        double overtimeHours = hoursWorked - 40;
+        if(overtimeHours > 0){
+            System.out.println("Overtime");
+        }
     }
 
-    public void punchTimeCard(double time, boolean isClockedIn) {
+    public void punchTimeCard(double time, boolean isClockingIn) {
         // calculate how many hours have been worked and
         // add that to their time sheet. Time clocked out - time punched in
+
+        LocalTime now = LocalTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        String timeNow = now.format(formatter);
+        if(isClockingIn){
+
+        }
+
     }
 
     public void cleanRoom() {
