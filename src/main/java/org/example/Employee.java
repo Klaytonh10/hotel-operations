@@ -27,4 +27,13 @@ public class Employee {
 
     }
 
+    public void punchTimeCard(double time, boolean isClockedIn) {
+        // calculate how many hours have been worked and
+        // add that to their time sheet. Time clocked out - time punched in
+    }
+
+    public void cleanRoom() {
+
+    }
+
 }

@@ -16,4 +16,16 @@ public class Room {
         this.isAvailable = isAvailable;
     }
 
+    public void checkIn() {
+        // set room occupied and make dirty
+    }
+
+    public void checkOut() {
+        // housekeeper must clean room before another guest can check in
+    }
+
+    public void cleanRoom() {
+
+    }
+
 }
