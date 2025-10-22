@@ -10,6 +10,10 @@ public class Employee {
     private double payRate;
     private double hoursWorked;
 
+    private boolean isClockingIn = false;
+    private String inTime;
+    private String outTime;
+
     public Employee(String employeeId, String name, String department, double payRate, double hoursWorked) {
         this.employeeId = employeeId;
         this.name = name;
@@ -50,13 +54,27 @@ public class Employee {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         String timeNow = now.format(formatter);
         if(isClockingIn){
-
+            this.isClockingIn = isClockingIn;
+            this.inTime = timeNow;
+        } else {
+            this.isClockingIn = false;
+            this.outTime = timeNow;
         }
 
     }
 
     public void cleanRoom() {
-
+        if(isClockingIn) {
+            System.out.println("Cleaning...wait 5 minutes");
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                System.out.println("Whoops, slipped on a banana " + e);
+            }
+            System.out.println("Room is now cleaned");
+        } else {
+            System.out.println("Not clocked in");
+        }
     }
 
 }
