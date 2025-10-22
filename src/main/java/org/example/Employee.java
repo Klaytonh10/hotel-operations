@@ -12,8 +12,8 @@ public class Employee {
     private double hoursWorked;
 
     private boolean isClockingIn = false;
-    private String inTime;
-    private String outTime;
+    private double timeIn;
+    private double timeOut;
 
     public Employee(String employeeId, String name, String department, double payRate, double hoursWorked) {
         this.employeeId = employeeId;
@@ -21,6 +21,10 @@ public class Employee {
         this.department = department;
         this.payRate = payRate;
         this.hoursWorked = hoursWorked;
+    }
+
+    public String getName() {
+        return this.name;
     }
 
     public double getTotalPay() {
@@ -36,6 +40,23 @@ public class Employee {
         }
     }
 
+    public double getTotalPay(double hours) {
+
+        double normalPay = hours * payRate;
+        double overtimePay = payRate * 1.5;
+        double overtimeHours = hours - 40;
+
+        if(overtimeHours > 0) {
+            return normalPay + (overtimePay * overtimeHours);
+        } else {
+            return normalPay;
+        }
+    }
+
+    public boolean getIsClockingIn() {
+        return this.isClockingIn;
+    }
+
     public double getRegularHours() {
         return hoursWorked;
     }
@@ -47,37 +68,35 @@ public class Employee {
         }
     }
 
-    public void punchTimeCard(double time, boolean isClockingIn) {
+    public void punchTimeCard(boolean isClockingIn) {
         // calculate how many hours have been worked and
         // add that to their time sheet. Time clocked out - time punched in
-        double todayTime;
-        LocalTime now = LocalTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-        String timeNow = now.format(formatter);
+
         if(isClockingIn){
             this.isClockingIn = isClockingIn;
-            this.inTime = timeNow;
+            System.out.println("Fanuel is now clocked in");
         } else {
             this.isClockingIn = false;
-            this.outTime = timeNow;
-            long timeBetween = Duration.between(inTime, outTime);
-            System.out.println(this.name + " worked for " + this.hoursWorked + " hours");
+            System.out.println(this.name + " is now clocked out");
         }
 
     }
 
-    public void cleanRoom() {
-        if(isClockingIn) {
-            System.out.println("Cleaning...wait 5 minutes");
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                System.out.println("Whoops, slipped on a banana " + e);
-            }
-            System.out.println("Room is now cleaned");
+    public void punchTimeCard(double time, boolean isClockingIn) {
+        // calculate how many hours have been worked and
+        // add that to their time sheet. Time clocked out - time punched in
+        if(isClockingIn){
+            this.isClockingIn = isClockingIn;
+            this.timeIn = time;
+            System.out.println(this.name + " is now clocked in\n");
         } else {
-            System.out.println("Not clocked in");
+            this.isClockingIn = false;
+            System.out.println(this.name + " is now clocked out");
+            this.timeOut = time;
+            double hoursWordedToday = timeOut - timeIn;
+            System.out.println(this.name + " made $" + getTotalPay(hoursWordedToday) + " today\n");
         }
+
     }
 
 }

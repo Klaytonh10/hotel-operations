@@ -2,17 +2,17 @@ package org.example;
 
 public class Room {
 
-    private int roomNumber;
     private int numberOfBeds;
-    private double getPrice;
     private boolean isOccupied;
     private boolean isDirty;
-    private boolean isAvailable;
+    private boolean isAvailable = true;
 
-    public void Room(int roomNumber, int numberOfBeds, double getPrice, boolean isOccupied, boolean isDirty, boolean isAvailable) {
-        this.roomNumber = roomNumber;
+    public Room() {
+
+    }
+
+    public Room(int numberOfBeds, boolean isOccupied, boolean isDirty, boolean isAvailable) {
         this.numberOfBeds = numberOfBeds;
-        this.getPrice = getPrice;
         this.isOccupied = isOccupied;
         this.isDirty = isDirty;
         this.isAvailable = isAvailable;
@@ -23,18 +23,36 @@ public class Room {
         if(!isOccupied && !isDirty){
             this.isDirty = true;
             this.isAvailable = false;
+            System.out.println("Room was checked into");
+        } else if(!isAvailable) {
+            System.out.println("This room is not available");
         } else {
-
+            System.out.println("This room is not ready");
         }
     }
 
     public void checkOut() {
         // housekeeper must clean room before another guest can check in
-
+        if(isAvailable) {
+            System.out.println("Room is not checked into yet...");
+        } else {
+            System.out.println("Room was checked out of");
+            System.out.println("Remember to clean this room");
+        }
     }
 
-    public void cleanRoom() {
-
+    public void cleanRoom(Employee employee) {
+        if(employee.getIsClockingIn()) {
+            System.out.println("Cleaning...wait 5 minutes");
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                System.out.println("Whoops, slipped on a banana " + e);
+            }
+            System.out.println("Room is now cleaned\n");
+        } else {
+            System.out.println(employee.getName() + " is not clocked in");
+        }
     }
 
 }

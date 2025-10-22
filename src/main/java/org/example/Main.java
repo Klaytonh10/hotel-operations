@@ -1,16 +1,12 @@
 package org.example;
 
-import java.time.LocalTime;
-
 public class Main {
 
     public static void main(String[] args) {
 
-        // Duration.between
 
-        Employee fanuel = new Employee("001", "Fanuel", "Door mat", 16, 45);
-        fanuel.punchTimeCard(11.50, true);
-        fanuel.cleanRoom();
-        fanuel.punchTimeCard(23.00, false);
+        // Duration.between
+        Reservation reservation = new Reservation("king", "2025-10-25T14:00:00", "2025-10-29T16:00:00");
+        System.out.println(reservation.reservationTotal());
     }
 }
