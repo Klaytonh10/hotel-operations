@@ -6,11 +6,11 @@ public class Main {
 
     public static void main(String[] args) {
 
-        LocalTime now = LocalTime.now();
+        // Duration.between
 
         Employee fanuel = new Employee("001", "Fanuel", "Door mat", 16, 45);
-        System.out.println(fanuel.getTotalPay());
-        fanuel.punchTimeCard(12.50, true);
+        fanuel.punchTimeCard(11.50, true);
         fanuel.cleanRoom();
+        fanuel.punchTimeCard(23.00, false);
     }
 }

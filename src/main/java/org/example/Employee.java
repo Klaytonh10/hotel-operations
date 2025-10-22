@@ -1,5 +1,6 @@
 package org.example;
 
+import java.time.Duration;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -49,7 +50,7 @@ public class Employee {
     public void punchTimeCard(double time, boolean isClockingIn) {
         // calculate how many hours have been worked and
         // add that to their time sheet. Time clocked out - time punched in
-
+        double todayTime;
         LocalTime now = LocalTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         String timeNow = now.format(formatter);
@@ -59,6 +60,8 @@ public class Employee {
         } else {
             this.isClockingIn = false;
             this.outTime = timeNow;
+            long timeBetween = Duration.between(inTime, outTime);
+            System.out.println(this.name + " worked for " + this.hoursWorked + " hours");
         }
 
     }
