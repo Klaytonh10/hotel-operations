@@ -74,7 +74,7 @@ public class Employee {
 
         if(isClockingIn){
             this.isClockingIn = isClockingIn;
-            System.out.println("Fanuel is now clocked in");
+            System.out.println(this.name + " is now clocked in");
         } else {
             this.isClockingIn = false;
             System.out.println(this.name + " is now clocked out");

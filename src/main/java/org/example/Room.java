@@ -3,8 +3,8 @@ package org.example;
 public class Room {
 
     private int numberOfBeds;
-    private boolean isOccupied;
-    private boolean isDirty;
+    boolean isOccupied;
+    boolean isDirty;
     private boolean isAvailable = true;
 
     public Room() {
@@ -18,30 +18,38 @@ public class Room {
         this.isAvailable = isAvailable;
     }
 
-    public void checkIn() {
+    public boolean checkIn() {
         // set room occupied and make dirty
         if(!isOccupied && !isDirty){
             this.isDirty = true;
+            this.isOccupied = true;
             this.isAvailable = false;
             System.out.println("Room was checked into");
+            return true;
         } else if(!isAvailable) {
             System.out.println("This room is not available");
+            return false;
         } else {
             System.out.println("This room is not ready");
+            return false;
         }
     }
 
-    public void checkOut() {
+    public boolean checkOut() {
         // housekeeper must clean room before another guest can check in
         if(isAvailable) {
             System.out.println("Room is not checked into yet...");
+            return false;
         } else {
+            this.isOccupied = false;
             System.out.println("Room was checked out of");
             System.out.println("Remember to clean this room");
+            return true;
         }
     }
 
-    public void cleanRoom(Employee employee) {
+    public String cleanRoom(Employee employee) {
+        String message;
         if(employee.getIsClockingIn()) {
             System.out.println("Cleaning...wait 5 minutes");
             try {
@@ -49,9 +57,13 @@ public class Room {
             } catch (InterruptedException e) {
                 System.out.println("Whoops, slipped on a banana " + e);
             }
-            System.out.println("Room is now cleaned\n");
+            message = "Room is now cleaned\n";
+            this.isAvailable = true;
+            this.isDirty = false;
+            return message;
         } else {
-            System.out.println(employee.getName() + " is not clocked in");
+            message = employee.getName() + " is not clocked in";
+            return message;
         }
     }
 
