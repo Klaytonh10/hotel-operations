@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class RoomTest {
 
     @Test
-    void test_check_in() {
+    void test_check_in_unoccupied() {
         // Arrange
         Room room1 = new Room();
 
@@ -21,7 +21,7 @@ class RoomTest {
     }
 
     @Test
-    void test_check_out() {
+    void test_check_out_clean_and_unoccupied() {
         // Arrange
         Room room1 = new Room();
 
@@ -50,13 +50,41 @@ class RoomTest {
     }
 
     @Test
-    void test_clean_room() {
+    void test_clean_room_without_employee_while_clean() {
+        // Arrange
+        Room room1 = new Room();
+        // Act
+        String expected = "this room is already clean";
+        String actual = room1.cleanRoom();
+        // Assert
+        System.out.println(actual);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void test_clean_room_while_dirty() {
+
+        // Arrange
+        Room room1 = new Room();
+        room1.isDirty = true;
+
+        // Act
+        String expected = "Room is now cleaned";
+        String actual = room1.cleanRoom();
+
+        // Assert
+        System.out.println(actual);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void test_clean_room_with_employee() {
         // Arrange
         Room room1 = new Room();
         Employee john = new Employee("001", "john", "cleaning", 1.25, 00);
-        john.punchTimeCard(true);
+        john.punchIn(9.30);
         // Act
-        String expected = "Room is now cleaned\n";
+        String expected = "Room is now cleaned";
         String actual = room1.cleanRoom(john);
         // Assert
         System.out.println(actual);

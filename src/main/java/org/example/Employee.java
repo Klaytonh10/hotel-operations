@@ -11,7 +11,7 @@ public class Employee {
     private double payRate;
     private double hoursWorked;
 
-    private boolean isClockingIn = false;
+    private boolean isWorking = false;
     private double timeIn;
     private double timeOut;
 
@@ -53,8 +53,8 @@ public class Employee {
         }
     }
 
-    public boolean getIsClockingIn() {
-        return this.isClockingIn;
+    public boolean getIsWorking() {
+        return this.isWorking;
     }
 
     public double getRegularHours() {
@@ -68,34 +68,32 @@ public class Employee {
         }
     }
 
-    public void punchTimeCard(boolean isClockingIn) {
-        // calculate how many hours have been worked and
-        // add that to their time sheet. Time clocked out - time punched in
+    // use same parameters of punchIn() and punchOut()
 
-        if(isClockingIn){
-            this.isClockingIn = isClockingIn;
-            System.out.println(this.name + " is now clocked in");
-        } else {
-            this.isClockingIn = false;
-            System.out.println(this.name + " is now clocked out");
+    public boolean punchIn(double time) {
+        if (!isWorking) {
+            this.isWorking = true;
+            this.timeIn = time;
         }
-
+        return this.isWorking;
     }
 
-    public void punchTimeCard(double time, boolean isClockingIn) {
+    public boolean punchOut(double time) {
+        if(isWorking) {
+            this.isWorking = false;
+            this.timeOut = time;
+        }
+        return this.isWorking;
+    }
+
+
+    public String punchTimeCard(double timeIn, double timeOut) {
         // calculate how many hours have been worked and
         // add that to their time sheet. Time clocked out - time punched in
-        if(isClockingIn){
-            this.isClockingIn = isClockingIn;
-            this.timeIn = time;
-            System.out.println(this.name + " is now clocked in\n");
-        } else {
-            this.isClockingIn = false;
-            System.out.println(this.name + " is now clocked out");
-            this.timeOut = time;
-            double hoursWordedToday = timeOut - timeIn;
-            System.out.println(this.name + " made $" + getTotalPay(hoursWordedToday) + " today\n");
-        }
+        double hoursWorkedToday = timeOut - timeIn;
+        String message = this.name + " made $" + getTotalPay(hoursWorkedToday) + " today";
+        System.out.println(message + "\n");
+        return message;
 
     }
 

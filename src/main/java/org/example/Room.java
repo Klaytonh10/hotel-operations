@@ -48,18 +48,60 @@ public class Room {
         }
     }
 
-    public String cleanRoom(Employee employee) {
+    public String cleanRoom() {
         String message;
-        if(employee.getIsClockingIn()) {
-            System.out.println("Cleaning...wait 5 minutes");
+        if(!this.isOccupied && this.isDirty) {
+            System.out.println("cleaning...wait 5 minutes");
             try {
-                Thread.sleep(3000);
+                Thread.sleep(1000);
+                System.out.println("\uD83E\uDDFC");
+                Thread.sleep(1000);
+                System.out.println("\uD83E\uDDF9");
+                Thread.sleep(1000);
+                System.out.println("\uD83E\uDDFA");
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 System.out.println("Whoops, slipped on a banana " + e);
             }
-            message = "Room is now cleaned\n";
+            message = "Room is now cleaned";
             this.isAvailable = true;
             this.isDirty = false;
+            return message;
+        } else if(this.isOccupied) {
+            message = "this room is occupied";
+            return message;
+        } else if(!this.isDirty) {
+            message = "this room is already clean";
+            return message;
+        } else {
+            return "error cleaning room";
+        }
+    }
+
+    public String cleanRoom(Employee employee) {
+        String message;
+        if(employee.getIsWorking() && !this.isOccupied && this.isDirty) {
+            System.out.println(employee.getName() + " is cleaning...wait 5 minutes");
+            try {
+                Thread.sleep(1000);
+                System.out.println("\uD83E\uDDFC");
+                Thread.sleep(1000);
+                System.out.println("\uD83E\uDDF9");
+                Thread.sleep(1000);
+                System.out.println("\uD83E\uDDFA");
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                System.out.println("Whoops, slipped on a banana " + e);
+            }
+            message = "Room is now cleaned";
+            this.isAvailable = true;
+            this.isDirty = false;
+            return message;
+        } else if(this.isOccupied) {
+            message = "this room is occupied";
+            return message;
+        } else if(!this.isDirty) {
+            message = "this room is already clean";
             return message;
         } else {
             message = employee.getName() + " is not clocked in";
